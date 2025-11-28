@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting...</title>
+    <script>
+      // Single Page App redirect for GitHub Pages
+      // Stores the path in sessionStorage and redirects to root
+      const path = window.location.pathname + window.location.search + window.location.hash;
+      sessionStorage.setItem('spa-redirect', path);
+      window.location.replace('/');
+    </script>
+  </head>
+  <body>
+    Redirecting...
+  </body>
+</html>

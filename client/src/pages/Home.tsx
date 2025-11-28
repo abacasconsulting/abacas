@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ArrowRight, Mail, Phone, Building2, Users, Target, Award } from "lucide-react";
 import { useEffect, useState } from "react";
+import ParticleBackground from "@/components/ParticleBackground";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -205,8 +206,9 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 bg-primary text-primary-foreground">
-        <div className="container px-6">
+      <section id="contact" className="relative py-24 bg-primary text-primary-foreground overflow-hidden">
+        <ParticleBackground className="opacity-40" />
+        <div className="container px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Let's Work Together
@@ -214,10 +216,10 @@ export default function Home() {
             <p className="text-xl mb-8 text-primary-foreground/90">
               Ready to discuss how Abacas Consulting can support your agency's strategic objectives?
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
-              <a 
-                href="mailto:abacas181@gmail.com" 
+              <a
+                href="mailto:abacas181@gmail.com"
                 className="flex items-center gap-3 text-lg hover:text-primary-foreground/80 transition-colors"
               >
                 <Mail className="h-6 w-6" />
@@ -225,8 +227,8 @@ export default function Home() {
               </a>
             </div>
 
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               variant="secondary"
               onClick={() => window.location.href = 'mailto:abacas181@gmail.com'}
               className="text-lg px-8"
