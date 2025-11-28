@@ -1,10 +1,8 @@
 name: Deploy Client to GitHub Pages
-
 on:
   push:
     branches:
       - main 
-
   workflow_dispatch:
 
 permissions:
@@ -22,33 +20,41 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
+        
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
+          
       - name: Set up pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8 
-          # ❌ Removing 'run_install: true' here as it caused the recursive install error
+          version: 10
+          
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+            
       - name: Install Dependencies
-        # ✅ Using 'pnpm install' explicitly to correctly handle the workspace
-        run: pnpm install
-
-      - name: Run Client Build (Vite)
-        # ✅ Running the build command *only* for the client part of your app
-        # Your 'build' script is complex, so we'll run the specific vite command 
-        # from the client directory to isolate the static front-end build.
-        run: pnpm --dir client run build 
+        run: pnpm install --frozen-lockfile
+        
+      - name: Run Vite Build
+        run: pnpm vite build --base=/abacas/
+        env:
+          NODE_ENV: production
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
         
       - name: Upload artifact
-        # The 'outDir' defined in vite.config.ts is 'dist/public'
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist/public'
