@@ -47,7 +47,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         
       - name: Run Vite Build
-        run: pnpm vite build --base=/abacas/
+        run: pnpm vite build --base=/
         env:
           NODE_ENV: production
         
