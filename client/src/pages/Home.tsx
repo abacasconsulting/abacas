@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ContactModal } from "@/components/ContactModal";
-import { Building2, Users, Target, Shield, BarChart, CheckCircle2, ArrowRight, Phone, Mail, Award } from "lucide-react";
+import { Building2, Users, Target, Shield, BarChart, CheckCircle2, ArrowRight, Phone, Mail, Award, Send } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
@@ -10,6 +10,7 @@ import LogoBar from "@/components/LogoBar";
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -34,7 +35,7 @@ export default function Home() {
               <a href="#services" className="text-sm font-medium hover:text-primary transition-colors">Services</a>
               <a href="#legacy" className="text-sm font-medium hover:text-primary transition-colors">Legacy</a>
               <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Contact</a>
-              <Button variant="default" size="sm">Get Started</Button>
+              <Button variant="default" size="sm" onClick={() => setIsContactOpen(true)}>Get Started</Button>
             </div>
           </div>
         </div>
@@ -222,7 +223,15 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col items-center gap-8">
-              <ContactModal />
+              <Button
+                size="lg"
+                className="text-lg px-8 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                onClick={() => setIsContactOpen(true)}
+              >
+                Contact Us <Send className="ml-2 h-5 w-5" />
+              </Button>
+
+              <ContactModal open={isContactOpen} onOpenChange={setIsContactOpen} />
 
               <p className="text-sm text-white/70">
                 Mon-Fri, 9am-5pm AEST
